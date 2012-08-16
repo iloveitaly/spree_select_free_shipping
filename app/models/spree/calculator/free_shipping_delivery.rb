@@ -41,7 +41,8 @@ module Spree
       # can't stack actions on a single promotion either (only the first promotional action is applied for a promotion)
       # we wan't to be able to limit the free shipping to an order above a specific number
 
-      (order.item_total - order.adjustments.promotion.eligible.map(&:amount).sum) > 0.0
+      # TODO the > $100 should be dynamic
+      (order.item_total - order.adjustments.promotion.eligible.map(&:amount).sum) > 100.0
     end
   end
 end
