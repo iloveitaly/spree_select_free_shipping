@@ -42,7 +42,7 @@ module Spree
       # we wan't to be able to limit the free shipping to an order above a specific number
 
       # TODO the > $100 should be dynamic
-      (order.item_total - order.adjustments.promotion.eligible.map(&:amount).sum) > 100.0
+      (order.item_total + order.adjustments.promotion.eligible.map(&:amount).sum) > 100.0
     end
   end
 end
