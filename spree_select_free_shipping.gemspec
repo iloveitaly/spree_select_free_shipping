@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_select_free_shipping'
   s.version     = '1.1.3'
-  s.summary     = 'TODO: Add gem summary here'
+  s.summary     = 'Free shipping as a selection in spree commerce'
   s.description = 'TODO: Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
 
