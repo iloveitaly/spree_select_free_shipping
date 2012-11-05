@@ -6,7 +6,7 @@ module SpreeSelectFreeShipping
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    initializer "spree.register.select_free_shipping", :after => 'spree.register.calculators' do |app|
+    initializer "spree.register.select_free_shipping", :after => 'spree.promo.register.promotion.calculators' do |app|
       app.config.spree.calculators.shipping_methods << Spree::Calculator::FreeShippingDelivery
       app.config.spree.calculators.promotion_actions_create_adjustments << Spree::Calculator::FreeShippingSelection
     end

@@ -21,26 +21,22 @@ module Spree
 
       # exception occurs when a promotion was modified or deleted, but the adjustment
       # associated with that promotion is still attached to the order
-      # begin
-        order.adjustments.promotion.each do |promotion|
-          # a promotion which has expired (start_at, end_at) can still be attached to an order
-          # we should 'recheck' the promotion status here
-          
-          if promotion.eligible or promotion.originator.promotion.eligible?(order)
-            # the promotion scope does a SQL 'LIKE' on the label field on the adjustments
-            # if a promotion is entered in through the admin with 'promotion' in the title
-            # it will *not* have an originator and trigger an exception here
+      order.adjustments.promotion.each do |promotion|
+        # a promotion which has expired (start_at, end_at) can still be attached to an order
+        # we should 'recheck' the promotion status here
+        
+        if promotion.eligible or promotion.originator.promotion.eligible?(order)
+          # the promotion scope does a SQL 'LIKE' on the label field on the adjustments
+          # if a promotion is entered in through the admin with 'promotion' in the title
+          # it will *not* have an originator and trigger an exception here
 
-            next if promotion.originator.blank?
+          next if promotion.originator.blank?
 
-            promotion.originator.promotion.actions.each do |action|
-              exists = true if action.calculator.class == Spree::Calculator::FreeShippingSelection
-            end
+          promotion.originator.promotion.actions.each do |action|
+            exists = true if action.calculator.class == Spree::Calculator::FreeShippingSelection
           end
-        end        
-      # rescue
-      #   return false
-      # end
+        end
+      end        
 
       return false unless exists
 
