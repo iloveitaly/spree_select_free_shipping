@@ -23,9 +23,11 @@ module Spree
       # associated with that promotion is still attached to the order
       order.adjustments.promotion.each do |promotion|
         # a promotion which has expired (start_at, end_at) can still be attached to an order
-        # we should 'recheck' the promotion status here
+        # this has to do with some of the issues discussed here: https://github.com/spree/spree/pull/1984
         
         if promotion.eligible or promotion.originator.promotion.eligible?(order)
+          # UPGRADE_CHECK the issue below is fixed here https://github.com/spree/spree/pull/2000
+          
           # the promotion scope does a SQL 'LIKE' on the label field on the adjustments
           # if a promotion is entered in through the admin with 'promotion' in the title
           # it will *not* have an originator and trigger an exception here
