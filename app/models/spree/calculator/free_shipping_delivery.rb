@@ -25,15 +25,7 @@ module Spree
         # a promotion which has expired (start_at, end_at) can still be attached to an order
         # this has to do with some of the issues discussed here: https://github.com/spree/spree/pull/1984
         
-        if promotion.eligible or promotion.originator.promotion.eligible?(order)
-          # UPGRADE_CHECK the issue below is fixed here https://github.com/spree/spree/pull/2000
-          
-          # the promotion scope does a SQL 'LIKE' on the label field on the adjustments
-          # if a promotion is entered in through the admin with 'promotion' in the title
-          # it will *not* have an originator and trigger an exception here
-
-          next if promotion.originator.blank?
-
+        if promotion.eligible || promotion.originator.promotion.eligible?(order)
           promotion.originator.promotion.actions.each do |action|
             exists = true if action.calculator.class == Spree::Calculator::FreeShippingSelection
           end

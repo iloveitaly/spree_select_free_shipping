@@ -1,6 +1,8 @@
 # https://github.com/spree/spree/issues/1439
 require_dependency 'spree/calculator'
 
+# read documentation for why Calculator::FreeShipping won't suffice
+
 module Spree
   class Calculator::FreeShippingSelection < Calculator
     def self.description
